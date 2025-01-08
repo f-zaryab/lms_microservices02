@@ -29,6 +29,14 @@ jobs:
      - name: Build Docker image for Auth Service
        run: docker build -t auth-service ./auth-service
 
+     - name: Log in to Docker Hub
+       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+     - name: Push Auth Service to Docker Hub
+       run: |
+        docker tag auth-service ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+
  # Video Service Job
  video-service:
    name: 🎥 Video Service - Build and Push Docker Image
@@ -48,6 +56,14 @@ jobs:
 
      - name: Build Docker image for Video Service
        run: docker build -t video-service ./video-service
+    
+     - name: Log in to Docker Hub
+       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+     - name: Push Video Service to Docker Hub
+       run: |
+        docker tag video-service ${{ secrets.DOCKER_USERNAME }}/video-service:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/video-service:latest
 
  # API Gateway Job
  api-gateway:
@@ -69,6 +85,14 @@ jobs:
      - name: Build Docker image for API Gateway
        run: docker build -t api-gateway ./api-gateway
 
+     - name: Log in to Docker Hub
+       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+     - name: Push API Gateway to Docker Hub
+       run: |
+        docker tag api-gateway ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
+
  # Frontend Service Job
  frontend:
    name: 💻 Frontend - Build and Push Docker Image
@@ -88,3 +112,11 @@ jobs:
 
      - name: Build Docker image for Frontend
        run: docker build -t frontend ./frontend
+
+     - name: Log in to Docker Hub
+       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+     - name: Push Frontend to Docker Hub
+       run: |
+        docker tag frontend ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest

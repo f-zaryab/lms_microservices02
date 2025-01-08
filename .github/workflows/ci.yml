@@ -24,7 +24,7 @@ jobs:
 
      - name: Install dependencies for Auth Service
        run: npm install
-       working-directory: ./user-service
+       working-directory: ./auth-service
 
      - name: Build Docker image for Auth Service
        run: docker build -t auth-service ./auth-service

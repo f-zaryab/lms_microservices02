@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-const AWS = require('aws-sdk');
 const { docClient } = require('./config/db.js');
+
 
 const port = 3001;
 
@@ -26,8 +26,24 @@ const videos = [
     { id: 17, title: "Designing a webpage", vidKey: "vid17.mp4", cat: "programming", description: "A tutorial on designing a webpage using HTML, CSS, and basic layout techniques." }
 ];
 
-app.get('/videos', (req, res) => {
-    res.json(videos);
+
+// Fetching all videos
+app.get('/api/v1/videos', async (req, res) => {
+    const params = {
+        TableName: 'videos',
+    };
+
+    try {
+        const { Items = [] } = await docClient.scan(params).promise();
+        res.status(200).json(Items); // Send fetched items as JSON response
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        res.status(500).send('Error fetching items123');
+    }
+});
+
+app.get('/api/v1/vid', async (req, res) => {
+    res.status(200).json(videos);
 });
 
 app.listen(port, () => {

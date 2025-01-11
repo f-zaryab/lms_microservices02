@@ -4,9 +4,9 @@ require('dotenv').config();
 
 // Configure AWS region and credentials
 AWS.config.update({
-    region: process.env.AWS_REGION,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    region: "us-east-1",
+    accessKeyId: "ASIAZLECMYTHWAARJX2I",
+    secretAccessKey: "duXBWwe6vx/chP0CIY+rK5E+q0r4StQO5S/Y8VW0"
 });
 
 const dynamoDB = new AWS.DynamoDB({ region: 'us-east-1' });

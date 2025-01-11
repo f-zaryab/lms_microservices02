@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+
+const AWS = require('aws-sdk');
+const { docClient } = require('./config/db.js');
+
 const port = 3001;
 
 const videos = [

@@ -9,18 +9,3 @@ services:
     build: ./video-service
     ports:
       - "3001:3001"
-
-  api-gateway:
-    build: ./api-gateway
-    ports:
-      - "3002:3002"
-    depends_on:
-      - auth-service
-      - video-service
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3003:3000"  # The frontend will be available on port 3003 (mapped to container's 3000)
-    depends_on:
-      - api-gateway

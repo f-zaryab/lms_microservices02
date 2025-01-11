@@ -9,9 +9,9 @@ app.use(express.json());
 const USER_SERVICE_URL = 'http://auth-service:3000';
 const VIDEO_SERVICE_URL = 'http://video-service:3001';
 
-app.get('/api/users', async (req, res) => {
+app.get('/api/v1/allusers', async (req, res) => {
     try {
-        const response = await axios.get(`${USER_SERVICE_URL}/users`);
+        const response = await axios.get(`${USER_SERVICE_URL}/api/v1/allusers`);
         res.json(response.data);
     } catch (error) {
         res.status(500).send('Error fetching users');

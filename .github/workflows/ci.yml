@@ -1,67 +1,94 @@
 name: CI/CD Pipeline
 
 on:
- push:
-   branches:
-     - main
- pull_request:
-   branches:
-     - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
- # User Service Job
- auth-service:
-   name: 🐳 Auth Service - Build and Push Docker Image
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v3
+  # User Service Job
+  auth-service:
+    name: 🐳 Auth Service - Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-     - name: Set up Node.js for Auth Service
-       uses: actions/setup-node@v3
-       with:
-         node-version: '20'
+      - name: Set up Node.js for Auth Service
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
 
-     - name: Install dependencies for Auth Service
-       run: npm install
-       working-directory: ./auth-service
+      - name: Install dependencies for Auth Service
+        run: npm install
+        working-directory: ./auth-service
 
-     - name: Build Docker image for Auth Service
-       run: docker build -t auth-service ./auth-service
+      - name: Build Docker image for Auth Service
+        run: docker build -t auth-service ./auth-service
 
-     - name: Log in to Docker Hub
-       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-     - name: Push Auth Service to Docker Hub
-       run: |
-        docker tag auth-service ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+      - name: Push Auth Service to Docker Hub
+        run: |
+          docker tag auth-service ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
 
- # Video Service Job
- video-service:
-   name: 🎥 Video Service - Build and Push Docker Image
-   runs-on: ubuntu-latest
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v3
+  # Video Service Job
+  video-service:
+    name: 🎥 Video Service - Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-     - name: Set up Node.js for Video Service
-       uses: actions/setup-node@v3
-       with:
-         node-version: '20'
+      - name: Set up Node.js for Video Service
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
 
-     - name: Install dependencies for Video Service
-       run: npm install
-       working-directory: ./video-service
+      - name: Install dependencies for Video Service
+        run: npm install
+        working-directory: ./video-service
 
-     - name: Build Docker image for Video Service
-       run: docker build -t video-service ./video-service
-    
-     - name: Log in to Docker Hub
-       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Build Docker image for Video Service
+        run: docker build -t video-service ./video-service
 
-     - name: Push Video Service to Docker Hub
-       run: |
-        docker tag video-service ${{ secrets.DOCKER_USERNAME }}/video-service:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/video-service:latest
- 
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Video Service to Docker Hub
+        run: |
+          docker tag video-service ${{ secrets.DOCKER_USERNAME }}/video-service:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/video-service:latest
+
+  # Recommender Service Job
+  recommender:
+    name: 🎥  Recommender - Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js for Video Service
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies for Video Service
+        run: npm install
+        working-directory: ./recommender
+
+      - name: Build Docker image for Video Service
+        run: docker build -t recommender ./recommender
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Video Service to Docker Hub
+        run: |
+          docker tag recommender ${{ secrets.DOCKER_USERNAME }}/recommender:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/recommender:latest

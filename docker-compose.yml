@@ -9,3 +9,8 @@ services:
     build: ./video-service
     ports:
       - "3001:3001"
+
+  recommender:
+    build: ./recommender
+    ports: 
+      - "3002:3002"
